@@ -6,4 +6,4 @@ members = [
 ]
 
 [patch.crates-io]
-ethnum = { git = "https://github.com/cuviper/ethnum-rs", tag = "v1.5.2" }
+ethnum = { git = "https://github.com/cuviper/ethnum-rs.git", tag = "v1.5.2" }
