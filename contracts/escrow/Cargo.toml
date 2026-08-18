@@ -8,7 +8,6 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 soroban-sdk = "20.0.0"
-paystream-reputation = { path = "../reputation" }
 
 [dev-dependencies]
 soroban-sdk = { version = "20.0.0", features = ["testutils"] }

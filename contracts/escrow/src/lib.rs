@@ -1,9 +1,13 @@
 #![no_std]
 use soroban_sdk::{
-    contract, contractimpl, contracttype, symbol_short, token::Client as TokenClient, Address, Env,
-    String, Symbol,
+    contract, contractclient, contractimpl, contracttype, symbol_short, token::Client as TokenClient,
+    Address, Env, String, Symbol,
 };
-use paystream_reputation::ReputationContractClient;
+
+#[contractclient(name = "ReputationContractClient")]
+pub trait ReputationContractInterface {
+    fn record_completion(env: Env, freelancer: Address, amount: i128);
+}
 
 #[contracttype]
 #[derive(Clone, Debug, PartialEq, Eq)]
