@@ -24,18 +24,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Deploy to Vercel
-        if: ${{ secrets.VERCEL_TOKEN != '' }}
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./frontend
-          vercel-args: '--prod'
-
-      - name: Deployment Notice
-        if: ${{ secrets.VERCEL_TOKEN == '' }}
+      - name: Deploy to Vercel (CLI)
         run: |
-          echo "Vercel deploy skipped: VERCEL_TOKEN secret is not set in GitHub repository settings."
-          echo "To enable auto-deploy, add VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID secrets."
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "VERCEL_TOKEN secret is not set in GitHub repository settings."
+            echo "Production build verified successfully! Skipping Vercel deploy step."
+          else
+            npx vercel --token "${{ secrets.VERCEL_TOKEN }}" --prod --yes
+          fi
