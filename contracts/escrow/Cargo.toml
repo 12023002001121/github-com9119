@@ -7,12 +7,10 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = "20.0.0"
-zeroize = "=1.8.1"
-ethnum = "1.5.2"
+soroban-sdk = "20.8.0"
 
 [dev-dependencies]
-soroban-sdk = { version = "20.0.0", features = ["testutils"] }
+soroban-sdk = { version = "20.8.0", features = ["testutils"] }
 paystream-reputation = { path = "../reputation", features = ["testutils"] }
 
 [features]
