@@ -5,12 +5,5 @@ members = [
     "contracts/reputation",
 ]
 
-[profile.release]
-opt-level = "z"
-overflow-checks = true
-debug = false
-strip = "symbols"
-debug-assertions = false
-panic = "abort"
-codegen-units = 1
-lto = true
+[patch.crates-io]
+ethnum = { git = "https://github.com/cuviper/ethnum-rs", tag = "v1.5.2" }
