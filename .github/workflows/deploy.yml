@@ -19,16 +19,17 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install Dependencies & Build
-        run: |
-          npm install
-          npm run build
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Deploy to Vercel (CLI)
+      - name: Build Frontend
+        run: npm run build
+
+      - name: Deploy to Vercel
         run: |
-          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
-            echo "VERCEL_TOKEN secret is not set in GitHub repository settings."
-            echo "Production build verified successfully! Skipping Vercel deploy step."
-          else
+          if [ -n "${{ secrets.VERCEL_TOKEN }}" ]; then
             npx vercel --token "${{ secrets.VERCEL_TOKEN }}" --prod --yes
+          else
+            echo "Vercel deploy skipped: VERCEL_TOKEN secret is not set in GitHub repository settings."
+            echo "Frontend production build succeeded."
           fi
