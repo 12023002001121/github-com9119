@@ -31,13 +31,16 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target
-          key: ${{ runner.os }}-cargo-stable-${{ hashFiles('**/Cargo.toml') }}
+          key: ${{ runner.os }}-cargo-v4-${{ hashFiles('**/Cargo.toml') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-stable-
+            ${{ runner.os }}-cargo-v4-
 
       - name: Clean Stale Cargo Git Cache
         run: |
           rm -rf ~/.cargo/git/db/ethnum-rs* || true
+
+      - name: Update Cargo Dependencies
+        run: cargo update -p ethnum
 
       - name: Build Contracts (WASM)
         run: cargo build --target wasm32-unknown-unknown --release
