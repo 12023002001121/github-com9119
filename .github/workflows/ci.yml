@@ -29,13 +29,9 @@ jobs:
           key: ${{ runner.os }}-cargo-1.78.0-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build Contracts (WASM)
-        env:
-          CARGO_NET_GIT_FETCH_WITH_CLI: "true"
         run: cargo build --target wasm32-unknown-unknown --release
 
       - name: Test Contracts (Soroban SDK Unit Tests)
-        env:
-          CARGO_NET_GIT_FETCH_WITH_CLI: "true"
         run: cargo test --all
 
   frontend-ci:
