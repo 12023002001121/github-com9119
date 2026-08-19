@@ -13,6 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Configure Git Credentials
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@master
         with:
@@ -20,13 +24,20 @@ jobs:
           targets: wasm32-unknown-unknown
 
       - name: Cache Cargo Dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
-            ~/.cargo/registry
-            ~/.cargo/git
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
             target
-          key: ${{ runner.os }}-cargo-1.78.0-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-v3-${{ hashFiles('**/Cargo.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-v3-
+
+      - name: Clean Stale Cargo Git Cache
+        run: |
+          rm -rf ~/.cargo/git/db/ethnum-rs* || true
 
       - name: Build Contracts (WASM)
         run: cargo build --target wasm32-unknown-unknown --release
