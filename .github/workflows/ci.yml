@@ -20,7 +20,7 @@ jobs:
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: 1.78.0
+          toolchain: stable
           targets: wasm32-unknown-unknown
 
       - name: Cache Cargo Dependencies
@@ -31,9 +31,9 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target
-          key: ${{ runner.os }}-cargo-v3-${{ hashFiles('**/Cargo.toml') }}
+          key: ${{ runner.os }}-cargo-stable-${{ hashFiles('**/Cargo.toml') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-v3-
+            ${{ runner.os }}-cargo-stable-
 
       - name: Clean Stale Cargo Git Cache
         run: |
